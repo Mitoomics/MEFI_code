@@ -1,0 +1,2 @@
+/mnt/data1/Seq_data/20231124/LC_Plasma_DOU_mtDNA-CAP/Analysis_private-DNA_V1/
+/mnt/data1/Seq_data/20231124/LB_Plasma_DOU_mtDNA-CAP/Analysis_private-DNA_V1/
