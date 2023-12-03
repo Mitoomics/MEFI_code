@@ -5,20 +5,17 @@ sed -i 's/\r//g' sample_path_list.txt
 cat sample_path_list.txt | while read line
 do
 
-    inpath=${line}
-    echo ${inpath}
+    echo ${line}
     #cal endmotifs
-    #python /mnt/hdd/usr/jiaohuanmin/home/jiaohm/Tools/mtDNA_pipeline/fragment_stduy_pipeline/endmotifs_stat_v1.py ${inpath}
+    #python endmotifs_stat_v2.py ${line}
     # cal LS125 sam
-    #python /mnt/hdd/usr/jiaohuanmin/home/jiaohm/Tools/mtDNA_pipeline/fragment_stduy_pipeline/split_mis10_by125.py ${inpath}
+    #python split_mis10_by125.py ${line}
     #cal depth
-    #bash /mnt/hdd/usr/jiaohuanmin/home/jiaohm/Tools/mtDNA_pipeline/fragment_stduy_pipeline/chrM_depth.sh ${inpath}
-    #cal zfsd
-    #python /mnt/hdd/usr/jiaohuanmin/home/jiaohm/Tools/mtDNA_pipeline/fragment_stduy_pipeline/concate_depth_v4.py ${inpath}
+    #bash chrM_depth.sh ${line}
     #cal zfsd feature
-    #python /mnt/hdd/usr/jiaohuanmin/home/jiaohm/Tools/mtDNA_pipeline/fragment_stduy_pipeline/fsd_feature_cal_v0.1.py ${inpath}
+    #python concate_depth_v4.py ${line}
     # cal insertsize
-    #bash /mnt/hdd/usr/jiaohuanmin/home/jiaohm/Tools/mtDNA_pipeline/fragment_stduy_pipeline/insertisize_find_mt.sh ${inpath}
+    #bash insertisize_find_mt.sh ${line}
     #concate insertsize
-    python /mnt/hdd/usr/jiaohuanmin/home/jiaohm/Tools/mtDNA_pipeline/fragment_stduy_pipeline/insertsize_concate_v3.1.py ${inpath}
+    python insertsize_concate_v3.1.py ${line}
 done
