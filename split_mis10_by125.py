@@ -1,54 +1,59 @@
-import os,sys
+import os
+import sys
 import pysam
 
-def long_short_split(sample_path,sample_name_list):
-    output_path = os.path.join(sample_path,'fragment_study/mis_10_splitedBy125','125_splited_sam_file')
-#    problem_file_path = os.path.join(sample_path,'mis_10_splitedBy125','problem_file')
-#     os.chdir(sample_path)
-    os.makedirs(output_path,exist_ok=True)
-#    os.makdirs(problem_file_path)
-    sample_name_list_path = os.path.join(sample_path,sample_name_list)
-    f = open(sample_name_list_path)
-    sample_names = f.readlines()
-    total_sample = 0
-    for i in sample_names:
-        i = i.replace('\n','').strip()
-        if os.path.getsize(os.path.join(sample_path,i,i+'.mis.10.bam')) > 1:
-            item_sam_file_path = os.path.join(sample_path,i,i+'.mis.10.bam')
-            print('Processing file '+ i+'.mis.10.bam')
-            sam_fitered_by_insertSize_path4 = os.path.join(output_path,i+'.mis.10.S125.sam')
-            sam_fitered_by_insertSize_path5 = os.path.join(output_path,i+'.mis.10.L125.sam')
-            sam_ali = pysam.AlignmentFile(item_sam_file_path,'rb')
 
-            sam_fitered_by_insertSize4 = pysam.AlignmentFile(sam_fitered_by_insertSize_path4,'w',template = sam_ali)
-            sam_fitered_by_insertSize5 = pysam.AlignmentFile(sam_fitered_by_insertSize_path5,'w',template = sam_ali)
-            sam_ali_fetch = sam_ali.fetch()
-            for read in sam_ali_fetch:
-                insert_size = abs(int(read.template_length))
-                if insert_size<125:#urine135,plasma125
-                    sam_fitered_by_insertSize4.write(read)
-                elif insert_size>=125:
-                    sam_fitered_by_insertSize5.write(read)
-            sam_ali.close()
-            sam_fitered_by_insertSize4.close()
-            sam_fitered_by_insertSize5.close()
-            total_sample += 1
-            print(str(total_sample)+'samples have been processed')
-            if total_sample == len(sample_names):
+def split_sam_files_by_insert_size(sample_path, sample_name_list_path,
+                                   output_path):
+    with open(sample_name_list_path, 'r') as f:
+        sample_names = [line.strip() for line in f if line.strip()]
+
+    total_samples = len(sample_names)
+    processed_samples = 0
+
+    for sample_name in sample_names:
+        bam_file_path = os.path.join(sample_path, sample_name,
+                                     f"{sample_name}.mis.10.bam")
+        if os.path.getsize(bam_file_path) > 1:
+            print(f'Processing file {bam_file_path}')
+
+            sam_file_path_4 = os.path.join(output_path,
+                                           f"{sample_name}.mis.10.S125.sam")
+            sam_file_path_5 = os.path.join(output_path,
+                                           f"{sample_name}.mis.10.L125.sam")
+
+            with pysam.AlignmentFile(bam_file_path, 'rb') as sam_ali, \
+                 pysam.AlignmentFile(sam_file_path_4, 'w', template=sam_ali) as sam_4, \
+                 pysam.AlignmentFile(sam_file_path_5, 'w', template=sam_ali) as sam_5:
+
+                for read in sam_ali.fetch():
+                    insert_size = abs(int(read.template_length))
+                    if insert_size < 125:
+                        sam_4.write(read)
+                    elif insert_size >= 125:
+                        sam_5.write(read)
+
+            processed_samples += 1
+            print(
+                f'{processed_samples}/{total_samples} samples have been processed'
+            )
+            if processed_samples == total_samples:
                 print('All samples have been processed')
         else:
-#            pf = open(os.path.join(problem_file_path,'sample_no_mis10.txt','a+')
-#            pf.write(i+'\n')
-            print('File '+i+' mis10 too small')
-        #print("cal depth!")
-        #os.system(f"samtools depth -d 500000000 -a -m 0 ${sam_fitered_by_insertSize_path4} > ../depth_file/${s}.txt"
-            
-    f.close()
-           
-def run():
+            print(f'File {bam_file_path} is too small or does not exist')
+
+
+def main():
     sample_path = sys.argv[1]
-    #sample_path = "/mnt/data1/Seq_data/20230815/N_Plasma_DOU_mtDNA-CAP/Analysis_private-mtDNA_V1"
-    sample_name_list = 'sample_name.txt'
-    long_short_split(sample_path,sample_name_list)
+    sample_name_list_path = os.path.join(sample_path,'sample_name.txt')
+    output_path = os.path.join(sample_path,
+                               'fragment_study/mis_10_splitedBy125',
+                               '125_splited_sam_file')
+    os.makedirs(output_path, exist_ok=True)
+
+    split_sam_files_by_insert_size(sample_path, sample_name_list_path,
+                                   output_path)
+
+
 if __name__ == '__main__':
-    run()
+    main()
