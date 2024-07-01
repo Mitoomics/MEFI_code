@@ -8,17 +8,21 @@ def median_isnertsize(
         outfile1="mis10_insertsize_cufrequency.csv",
         outfile2="mis10_insertsize_cumfrequency50%_insertsize.csv",
         excluded="mis10_insertsize_excluded_sample.csv"):
-    df = pd.read_csv(os.path.join(inpath, "insertszie",infile), index_col=False)
+    df = pd.read_csv(os.path.join(inpath,infile), index_col=False)
     merge_list = []
+    d = []
     for col in df.iloc[:, 1:].columns:
         a = df[col] / df[col].sum()
         b = a.cumsum()
         df_cumsumfreq = pd.DataFrame({col: b})
         merge_list.append(df_cumsumfreq)
+        d.append(a)
     df_cf = pd.concat(merge_list, axis=1)
-    outpath = os.path.join(inpath, "insertszie/cumsumfrequency")
+    df_d = pd.concat(d, axis=1)
+    outpath = os.path.join(inpath, "cumsumfrequency")
     os.makedirs(outpath, exist_ok=True)
     df_cf.to_csv(os.path.join(outpath, outfile1), index=False)
+    df_d.to_csv(os.path.join(outpath, "denisty.csv"), index=False)
 
     col_dic = {}
     col_aa = {}
@@ -46,7 +50,5 @@ def median_isnertsize(
 
 if __name__ == "__main__":
     inpath = sys.argv[1]
-    #inpath = "/mnt/data1/Seq_data/20231019/CC_Plasma_DOU_mtDNA-CAP/Analysis_private-DNA_V1/fragment_study"
     infile = "mis_10_insertsize_mtr.csv"
-    #infile = sys.argv[2]
     median_isnertsize(inpath, infile)
