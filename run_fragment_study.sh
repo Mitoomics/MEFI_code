@@ -7,15 +7,15 @@ do
 
     echo ${line}
     #cal endmotifs
-    #python endmotifs_stat_v2.py ${line}
+    #python endmotifs_stat.py ${line}
     # cal LS125 sam
     #python split_mis10_by125.py ${line}
     #cal depth
     #bash chrM_depth.sh ${line}
     #cal zfsd feature
-    #python concate_depth_v4.py ${line}
+    #python fsd_compute.py ${line}
     # cal insertsize
     #bash insertisize_find_mt.sh ${line}
-    #concate insertsize
-    python insertsize_concate_v3.1.py ${line}
+    #insertsize stat
+    python insertsize_stat.py ${line}
 done
