@@ -1,7 +1,7 @@
 import os, sys
 import glob
 import pandas as pd
-from median_cal import median_isnertsize
+from median_insertsize_cal import median_isnertsize
 from functools import reduce
 
 
