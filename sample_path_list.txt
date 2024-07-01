@@ -1,1 +1,2 @@
-/mnt/hdd/usr/jiaohuanmin/home/jiaohm/test_git/example
+#To avoid some running error,please provide the absolutely path
+./MEFI_code/example/
