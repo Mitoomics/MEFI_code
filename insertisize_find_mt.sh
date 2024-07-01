@@ -1,6 +1,5 @@
 #!bin/bash
 result_dir=$1
-#result_dir=/mnt/data1/jiaohm/mapping_methods/Analysis_rCRS-hg38-DNA_V1
 cd $result_dir
 mkdir tmp
 filenames=$(ls ./*/*mis.*.bam)
