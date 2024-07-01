@@ -8,29 +8,14 @@ from scipy.spatial import distance
 
 from window_cut import cut
 
-# 1 good data 个人参考基因组比对，提取mtDNA reads
-# 2 质控：mis10 过滤
-# 3 以125为标准划分mis10为长片段（L125）和短片段（S125）
-# 4 计算长片段和短片段depth
-# 5 fsd = Ldepth/Sdepth
-# 6 fsd数据清洗（缺失值填充，inf值填充，sklearn或者pandas方法填充）
-# 7 fsd数据标准化（z-score）
-# 8 zfsd 曲线特征计算
-## 曲线峰特征（曲线平滑SciPy）
-## 曲线下面积
-## 曲线与baseline 欧几里得距离（SciPy）
-## 曲线与HC曲线相关性（raw zfsd data,平滑后相关性）
-
-
-# 计算实验样本平滑后曲线峰特征
 class ZFSD_Feature_Cal:
     def __init__(
         self,
         root_dir,
         zfsd_path = "fragment_study/mis_10_splitedBy125/depth_stat_LS125_zfsd.csv",
-        baseline_zfsd="/mnt/hdd/usr/jiaohuanmin/home/jiaohm/data/liuy/fragment_study/control_data/zfsd/HC_sample_FSD_with_mean_median.csv",
-        baseline_smothed="/mnt/hdd/usr/jiaohuanmin/home/jiaohm/data/liuy/fragment_study/LLI/FSD/control/30_HC_sample_zfsd_smothed.csv",
-        baseline_peaks_feature="/mnt/hdd/usr/jiaohuanmin/home/jiaohm/data/liuy/fragment_study/LLI/original_data/30_HC_mean_data_after_smothed_para_51_1_peaks_filteredBywidth_5_peaks_feature.csv"
+        baseline_zfsd=f"{path_to_baseline_fsd_median}/HC_sample_FSD_median.csv",
+        baseline_smothed=f"{path_to_baseline_zfsd_smothed}/HC_sample_zfsd_smothed.csv",
+        baseline_peaks_feature=f"{path_to_baseline_fsd_peaks_feature}/HC_peaks_feature.csv"
     ):
         self.root_dir = root_dir
         self.zfsd_path = os.path.join(root_dir, zfsd_path)
@@ -62,7 +47,7 @@ class ZFSD_Feature_Cal:
         for s in dft.columns:
             name = s.split("_")[1].split(".")[0]
             y = savgol_filter(dft[s], 51, 1,
-                              mode="nearest")  # 根据均值确定平滑曲线参数第一个参数51
+                              mode="nearest")  
             peaks_positive, _ = find_peaks(y, width=5)
             peaks_negative, _ = find_peaks(-y, width=5)
             peaks_cunt[name] = len(peaks_positive) + len(peaks_negative)
@@ -145,8 +130,6 @@ class ZFSD_Feature_Cal:
                             cunt_list)
         df_sn_cunt.to_csv(os.path.join(self.root_dir, peaks_path, out5),
                           index=False)
-
-        # 计算实验样本与baseline样本平滑后zfsd曲线相关性
         base_smothed = pd.read_csv(self.baseline_smothed,
                                    usecols=["Mean"],
                                    index_col=False)
@@ -167,7 +150,6 @@ class ZFSD_Feature_Cal:
             output1="euclidean_of_zfsd_and_HC_median.csv",
             output2="euclidean_of_zfsd_and_HC_median_in_255.csv",
             output3="excluded_samples.csv"):
-        # zfsd曲线与参考df_h相似度：欧几里得距离
         df_h = pd.read_csv(self.baseline_zfsd, index_col=False)
         dft = pd.read_csv(self.zfsd_path, index_col=False)
         df_255_list = []
@@ -178,10 +160,8 @@ class ZFSD_Feature_Cal:
         for col in dft.columns:
             try:
                 if not dft[col].empty:
-                    # 计算整条曲线与baseline相似度
                     ou_dic_total[col] = distance.euclidean(
                         dft[col], df_h["median"])
-                    # 计算255个区间内曲线相似度（欧氏距离）
                     base_cut_list = cut(df_h["median"], 65)
                     sample_cut_list = cut(dft[col], 65)
                     for j in range(255):
