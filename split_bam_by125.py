@@ -3,7 +3,7 @@ import sys
 import pysam
 
 
-def split_sam_files_by_insert_size(sample_path, sample_name_list_path,
+def split_sam_files_by_insert_size(sample_path, sample_name_list_path,suffix,
                                    output_path):
     with open(sample_name_list_path, 'r') as f:
         sample_names = [line.strip() for line in f if line.strip()]
@@ -13,7 +13,7 @@ def split_sam_files_by_insert_size(sample_path, sample_name_list_path,
 
     for sample_name in sample_names:
         bam_file_path = os.path.join(sample_path, sample_name,
-                                     f"{sample_name}.mis.10.bam")
+                                     sample_name+suffix)
         if os.path.getsize(bam_file_path) > 1:
             print(f'Processing file {bam_file_path}')
 
@@ -45,13 +45,14 @@ def split_sam_files_by_insert_size(sample_path, sample_name_list_path,
 
 def main():
     sample_path = sys.argv[1]
+    suffix =  sys.argv[2]
     sample_name_list_path = os.path.join(sample_path,'sample_name.txt')
     output_path = os.path.join(sample_path,
                                'fragment_study/mis_10_splitedBy125',
                                '125_splited_sam_file')
     os.makedirs(output_path, exist_ok=True)
 
-    split_sam_files_by_insert_size(sample_path, sample_name_list_path,
+    split_sam_files_by_insert_size(sample_path, sample_name_list_path,suffix,
                                    output_path)
 
 
