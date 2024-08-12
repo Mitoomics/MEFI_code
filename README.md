@@ -1,6 +1,6 @@
 # MEFI_code
 # Aberrant fragmentomic features of circulating cell-free mitochondrial DNA as novel biomarkers in cancer patients
-# [Contents]
+# Contents
   - [Overview](#overview)
   - [System Requirements](#system-requirements)
   - [Installation Guide](#installation-guide)
