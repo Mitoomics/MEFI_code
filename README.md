@@ -14,18 +14,18 @@
 
 MEFI_code is a package containing tools for comprehensive analysis of ccf-mtDNA fragmentomic features, that is capable of dealing with sequencing data. MEFI_code also can be used to calculate the probability of developing cancer and to trace its origin.
 
-[System Requirements](#system-requirements)
+# System Requirements
 
-# Hardware Requirements
+**Hardware Requirements**
 
 MEFI_code requires only a standard computer with enough RAM to support the operations defined by a user. For minimal performance, this will be a computer with about 2 GB of RAM. For optimal performance, we recommend a computer with the following specs:
 
 RAM: 16+ GB
 CPU: 4+ cores, 3.3+ GHz/core
 
-# Software Requirements
+**Software Requirements**
 
-# OS Requirements
+*OS Requirements*
 
 This package is supported for MacOS,Windos and Linux systems.The package development version is tested on Linux operating systems on CentOS 7.9.
 
@@ -33,7 +33,7 @@ The CRAN package should be compatible with Windows, Mac, and Linux operating sys
 
 Before setting up the MEFI_code package, users should have R version 3.4.0 or higher , randomForest and several packages set up from CRAN should installed.Python scripts is tested on 3.10.9 and python3 is recommended. To avoid some conflicts between softwares, anaconda or miniconda package manager and virtual environment are also recommended.
 
-# Packages and Softs Dependencies
+*Packages and Softs Dependencies*
 
 MEFI_code mainly depends on the Python scientific stack.
 ```
@@ -45,7 +45,7 @@ samtools==1.15.1
 picard-tools==1.81
 ```
 
-[Installation Guide](#installation-guide)
+# Installation Guide
 
 1.Install anaconda
 2.Create and activate virtul envirment
@@ -65,7 +65,7 @@ Two test sample are under example root and all the features exhibited in the pap
 bash run_fragment_study.sh
 ```
 
-# Results]
+# Results
 
 There are 12 directories and 30 files under the example/fragment_study as the tree structure:
 ```
