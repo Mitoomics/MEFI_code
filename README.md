@@ -1,6 +1,6 @@
 # MEFI_code
 # Aberrant fragmentomic features of circulating cell-free mitochondrial DNA as novel biomarkers in cancer patients
-  [Contents](#contents)
+# [Contents]
   - [Overview](#overview)
   - [System Requirements](#system-requirements)
   - [Installation Guide](#installation-guide)
@@ -10,22 +10,22 @@
   - [Issues](#issues)
   - [Citation](#citation)
 
-[Overview](#overview)
+# Overview
 
 MEFI_code is a package containing tools for comprehensive analysis of ccf-mtDNA fragmentomic features, that is capable of dealing with sequencing data. MEFI_code also can be used to calculate the probability of developing cancer and to trace its origin.
 
 [System Requirements](#system-requirements)
 
-**Hardware Requirements**
+# Hardware Requirements
 
 MEFI_code requires only a standard computer with enough RAM to support the operations defined by a user. For minimal performance, this will be a computer with about 2 GB of RAM. For optimal performance, we recommend a computer with the following specs:
 
 RAM: 16+ GB
 CPU: 4+ cores, 3.3+ GHz/core
 
-**Software Requirements**
+# Software Requirements
 
-**OS Requirements**
+# OS Requirements
 
 This package is supported for MacOS,Windos and Linux systems.The package development version is tested on Linux operating systems on CentOS 7.9.
 
@@ -33,7 +33,7 @@ The CRAN package should be compatible with Windows, Mac, and Linux operating sys
 
 Before setting up the MEFI_code package, users should have R version 3.4.0 or higher , randomForest and several packages set up from CRAN should installed.Python scripts is tested on 3.10.9 and python3 is recommended. To avoid some conflicts between softwares, anaconda or miniconda package manager and virtual environment are also recommended.
 
-**Packages and Softs Dependencies**
+# Packages and Softs Dependencies
 
 MEFI_code mainly depends on the Python scientific stack.
 ```
@@ -59,13 +59,13 @@ conda install r-base=4.3.0
 install.packages ("randomForest")
 ```
 
-[Demo](#demo)
+# Demo
 Two test sample are under example root and all the features exhibited in the paper could be computed by running the shell script run_fragment_study.sh as follow once:
 ```
 bash run_fragment_study.sh
 ```
 
-[Results](#results)
+# Results]
 
 There are 12 directories and 30 files under the example/fragment_study as the tree structure:
 ```
@@ -115,11 +115,11 @@ fragment_study
 ```
 
 
-[License](#license)
+# License
 
 This project is covered under the Apache 2.0 License.
 
-[Issues](#issues)
+# Issues
 
 If you're having trouble, notice a bug, or want to contribute (such as a fix to the bug you may have just found) feel free to open a git issue or pull request. Enjoy!
 
